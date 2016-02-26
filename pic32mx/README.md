@@ -34,9 +34,10 @@
 
 # Build Instructions for PIC32MX
 
-* INSTALL Pinguino-11 p32-gcc Toolchain
+[INSTALL Pinguino-11 p32-gcc Toolchain](http://www.pinguino.cc/download.php)
 
-     $ make
+
+    $ make
        .
        .
        .
@@ -51,4 +52,5 @@
       84300	   3656	   1492	  89448	  15d68	build/firmware.elf
     p32-objdump -d build/firmware.elf >main32.lss
 
-Enjoy!
+
+* Enjoy!
