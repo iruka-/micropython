@@ -78,7 +78,8 @@ $(BUILD)/firmware.elf: $(OBJ)
 	p32-objdump -d $@ > build/main32.lss
 
 dump:
-	hex2dump build/main32.hex > build/main32.dump
+	hex2dump.exe build/main32.hex > build/main32.dump
+#   ~~~~~~~~~~~~ elf or win32 executable
 
 include ../py/mkrules.mk
 
