@@ -4,6 +4,8 @@
 
 * PIC32MX270 (256k Flash 64k SRAM w/USB IE)
 
+* PIC32MX150 (128k Flash 32k SRAM )
+
 * PIC32MX170 (256k Flash 64k SRAM )
 
 # SCHEMATIC DIAGRAM
@@ -30,7 +32,20 @@
     |        |         RB5 [14      15] Vbus-----------USB Vbus(5V)
     GND    GND              ~~~~~~~~~~
                          PIC32MX250F128B
-            
+
+
+* Oneboard MicroComputer Board [ORANGE pico](http://www.picosoft.co.jp/orange/) based.
+
+
+# ToDo
+
+* UART1(U1TX/U1RX) Support.
+
+* NTSC VideoOut Support.
+
+* PS/2 Keyboard Input Support.
+
+* and more...
 
 # Build Instructions for PIC32MX
 
