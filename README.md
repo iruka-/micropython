@@ -13,11 +13,17 @@ The MicroPython project
 <p align="center">
   <img src="https://raw.githubusercontent.com/micropython/micropython/master/logo/upython-with-micro.jpg" alt="MicroPython Logo"/>
 </p>
-
 This is the MicroPython project, which aims to put an implementation
 of Python 3.x on microcontrollers and small embedded systems.
 You can find the official website at [micropython.org](http://www.micropython.org).
 
+THIS IS PIC32MX PORT for MICROCHIP PIC32MX Family MCUs.
+
+- pic32mx/ -- a version of MicroPython for 32-bit PIC32MX (MIPS-4K) microcontrollers.
+
+
+
+<!----
 WARNING: this project is in beta stage and is subject to changes of the
 code-base, including project-wide name changes and API changes.
 
@@ -151,4 +157,6 @@ AUR.  If the above does not work it may be because you don't have the
 correct permissions.  Try then:
 
     $ sudo dfu-util -a 0 -d 0483:df11 -D build-PYBV10/firmware.dfu
+
+---->
 
