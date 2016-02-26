@@ -1,10 +1,10 @@
 # SUPPORT CHIP
 
-PIC32MX250 (128k Flash 32k SRAM w/USB IE)
+* PIC32MX250 (128k Flash 32k SRAM w/USB IE)
 
-PIC32MX270 (256k Flash 64k SRAM w/USB IE)
+* PIC32MX270 (256k Flash 64k SRAM w/USB IE)
 
-PIC32MX170 (256k Flash 64k SRAM )
+* PIC32MX170 (256k Flash 64k SRAM )
 
 # SCHEMATIC DIAGRAM
 
@@ -34,21 +34,21 @@ PIC32MX170 (256k Flash 64k SRAM )
 
 # Build Instructions for PIC32MX
 
-INSTALL Pinguino-11 p32-gcc Toolchain
+* INSTALL Pinguino-11 p32-gcc Toolchain
 
- $ make
-   .
-   .
-   .
-
-CC ../py/../extmod/vfs_fat_file.c
-CC ../py/../extmod/moduos_dupterm.c
-CC main.c
-CC syscalls.c
-p32-gcc -I../lib/netutils -I. -I.. -I/usr/share/pinguino-11/p32/include/non-free/ -Ibuild -march=m4k -EL -msoft-float  -c crt0.S -o build/crt0.o
-LINK build/firmware.elf
-   text	   data	    bss	    dec	    hex	filename
-  84300	   3656	   1492	  89448	  15d68	build/firmware.elf
-p32-objdump -d build/firmware.elf >main32.lss
+     $ make
+       .
+       .
+       .
+    
+    CC ../py/../extmod/vfs_fat_file.c
+    CC ../py/../extmod/moduos_dupterm.c
+    CC main.c
+    CC syscalls.c
+    p32-gcc -I../lib/netutils -I. -I.. -I/usr/share/pinguino-11/p32/include/non-free/ -Ibuild -march=m4k -EL -msoft-float  -c crt0.S -o build/crt0.o
+    LINK build/firmware.elf
+       text	   data	    bss	    dec	    hex	filename
+      84300	   3656	   1492	  89448	  15d68	build/firmware.elf
+    p32-objdump -d build/firmware.elf >main32.lss
 
 Enjoy!
