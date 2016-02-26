@@ -7,20 +7,26 @@ QSTR_DEFS = qstrdefsport.h
 include ../py/py.mk
 
 CROSS_COMPILE = p32-
+OBJCOPY	 = p32-objcopy
+
+
+#PINGUINO_HOME = C:\pinguino-11
+PINGUINO_HOME  = /usr/share/pinguino-11
+PINGUINO_INC   = $(PINGUINO_HOME)/p32/include
 
 INC += -I.
 INC += -I..
-INC += -I/usr/share/pinguino-11/p32/include/non-free/
+INC += -I$(PINGUINO_INC)/pinguino/core/
+INC += -I$(PINGUINO_INC)/non-free/
 INC += -I$(BUILD)
 
-#CFLAGS_CORTEX_M4 = -mthumb -mtune=cortex-m4 -mabi=aapcs-linux -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard -fsingle-precision-constant -Wdouble-promotion
+PROC			= 32MX250F128B
+DEFINES		    = -D__PIC32MX__ -D__$(PROC)__ -DGENERIC32MX250F128
 
-#CFLAGS_PIC32MX = -march=24kc -mips16 -minterlink-mips16
-CFLAGS_PIC32MX = -march=m4k -EL -msoft-float 
-#CFLAGS_PIC32MX = -march=24kc
-#CFLAGS = $(INC) -Wall -Werror -ansi -std=gnu99 -nostdlib $(CFLAGS_CORTEX_M4) $(COPT)
-CFLAGS = $(INC) -Wall -Werror -ansi -std=gnu99 $(CFLAGS_PIC32MX) -mips16 -minterlink-mips16 $(COPT)
+CFLAGS_PIC32MX  = -march=m4k -EL -msoft-float 
 
+CFLAGS  = $(INC) -Wall -Werror -ansi -std=gnu99 $(CFLAGS_PIC32MX)
+CFLAGS += -mips16 -minterlink-mips16 $(COPT) $(DEFINES)
 #DEBUG = 1
 
 #Debugging/Optimization
@@ -34,11 +40,20 @@ endif
 LDFLAGS  = -L/usr/share/pinguino-11/compilers/p32/mips-elf/lib/soft-float/el/
 LDFLAGS += -nostdlib -T 32MX270F256B.ld -T elf32pic32mx.x
 LDFLAGS += -Map=$@.map --cref
-LIBS = -lc
+
+
+LIBS  = $(PINGUINO_HOME)/p32/obj/non-free/$(PROC).o
+LIBS += -lc
 
 SRC_C = \
 	main.c \
 	syscalls.c \
+	led.c \
+	util.c \
+	fifo.c \
+	serial1.c \
+	interrupt.c \
+
 
 #	printf.c \
 	string0.c \
@@ -59,7 +74,11 @@ $(BUILD)/firmware.elf: $(OBJ)
 	$(ECHO) "LINK $@"
 	$(Q)$(LD) $(LDFLAGS) -o $@ $^ $(LIBS)
 	$(Q)$(SIZE) $@
-	p32-objdump -d $@ >main32.lss
+	$(OBJCOPY) -O ihex $@ build/main32.hex
+	p32-objdump -d $@ > build/main32.lss
+
+dump:
+	hex2dump build/main32.hex > build/main32.dump
 
 include ../py/mkrules.mk
 
