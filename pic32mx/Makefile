@@ -64,8 +64,11 @@ SRC_C = \
 
 SRC_S = \
 	crt0.s \
-#	ISRWrapper.S \
-#	startup_stm32f40xx.s \
+	ISRwrapper.s \
+
+#
+#    ↑  本当はISRwrapper.S であるべき所、.sにしないと .oに置換してくれないので、わざと.
+#
 #	gchelper.s \
 
 OBJ = $(PY_O) $(addprefix $(BUILD)/, $(SRC_C:.c=.o) $(SRC_S:.s=.o))
@@ -86,9 +89,9 @@ dump:
 include ../py/mkrules.mk
 
 $(BUILD)/crt0.o : crt0.S
-	$(CC) $(INC) $(CFLAGS_PIC32MX) -c $< -o $@
+	$(CC) $(INC) $(DEFINES) $(CFLAGS_PIC32MX) -c $< -o $@
 
-$(BUILD)/ISRWrapper.o : ISRWrapper.S
-	$(CC) $(INC) $(CFLAGS_PIC32MX) -mips16 -minterlink-mips16 -c $< -o $@
+$(BUILD)/ISRwrapper.o : ISRwrapper.S
+	$(CC) $(INC) $(DEFINES) $(CFLAGS_PIC32MX) -fdollars-in-identifiers -c $< -o $@
 
 #
