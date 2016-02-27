@@ -114,7 +114,7 @@ void MIPS32 Serial1WriteChar(char c);
 int		Serial1Available();
 int		Serial1Read();
 int		Serial1GetKey();
-void	Serial1Interrupt(void);
+//void	Serial1Interrupt(void);
 
 
 void UARTwrite(unsigned char *buf,int len);

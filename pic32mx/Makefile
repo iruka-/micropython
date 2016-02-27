@@ -38,7 +38,7 @@ endif
 
 #LDFLAGS = -nostdlib -T stm32f405.ld -Map=$@.map --cref
 LDFLAGS  = -L/usr/share/pinguino-11/compilers/p32/mips-elf/lib/soft-float/el/
-LDFLAGS += -nostdlib -T 32MX270F256B.ld -T elf32pic32mx.x
+LDFLAGS += -nostdlib -T 32MX250F128B.ld -T elf32pic32mx.x
 LDFLAGS += -Map=$@.map --cref
 
 
@@ -63,6 +63,7 @@ SRC_C = \
 
 SRC_S = \
 	crt0.s \
+#	ISRWrapper.S \
 #	startup_stm32f40xx.s \
 #	gchelper.s \
 
@@ -85,5 +86,8 @@ include ../py/mkrules.mk
 
 $(BUILD)/crt0.o : crt0.S
 	$(CC) $(INC) $(CFLAGS_PIC32MX) -c $< -o $@
+
+$(BUILD)/ISRWrapper.o : ISRWrapper.S
+	$(CC) $(INC) $(CFLAGS_PIC32MX) -mips16 -minterlink-mips16 -c $< -o $@
 
 #

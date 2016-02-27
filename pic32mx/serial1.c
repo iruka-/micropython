@@ -286,7 +286,7 @@ int	UARTgetpacket(char *buf,int size)
 	--------------------------------------------------------------------------*/
 
 // vector 24 or 32 (PIC32_PINGUINO_220)
-void  Serial1Interrupt(void)
+void  MIPS32 _Serial1Interrupt(void)
 {
 	// Is this an RX interrupt from UART1 ?
 	if (IFS1bits.U1RXIF) {

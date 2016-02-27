@@ -2,6 +2,7 @@
 #include <stdlib.h>			// always in first place to avoid conflict with const.h ON
 
 
+#include "config.h"
 #include "util.h"
 
 typedef	unsigned int uint;
@@ -12,9 +13,19 @@ void wait_ms(int ms);
  *		
  ********************************************************************
  */
+void led_on()
+{
+	mLED_1_On();
+}
+
+void led_off()
+{
+	mLED_1_Off();
+}
+
 void led_flip()
 {
-	LATBINV=0x8000;	// LATB.bit15を反転
+	mLED_1_Toggle();
 }
 
 /********************************************************************
@@ -23,6 +34,7 @@ void led_flip()
  */
 void led_test()
 {
+	mInitAllLEDs();
 	while(1) {
 		led_flip();
 		wait_ms(500);
@@ -34,7 +46,6 @@ void led_test()
  ********************************************************************
  */
 #define	CNTMAX		400000
-//#define	CNTMAX		100000
 void led_blink()
 {
 	static int cnt=0;

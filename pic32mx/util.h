@@ -1,7 +1,10 @@
 #ifndef _UTIL_H_
 #define _UTIL_H_
 
+void    led_on();
+void    led_off();
 void	led_flip();
+
 void	led_test();
 void	led_blink();
 

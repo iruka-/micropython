@@ -23,13 +23,14 @@
 #include <system.c>				// PIC32 System Core Functions
 //#include <io.c>					// Pinguino Boards Peripheral Remappage and IOs configurations
 
+#include "config.h"
 #include "serial1.h"
+#include "util.h"
 
 #ifndef	BAUDRATE
 #define	BAUDRATE	500000
 #endif
 
-#define mInitBootSwitch()   TRISBbits.TRISB7=1;
 #define mGetSWRFlag()       RCONbits.SWR
 #define Boot_SW             PORTBbits.RB7
 
@@ -88,10 +89,14 @@ void io_setRemap()
  */
 static	inline void setup()
 {
-	TRISBCLR=0x8000;	//	pinmode(13, OUTPUT);
-	SerialConfigure(UART1, UART_ENABLE,	UART_RX_TX_ENABLED,	BAUDRATE);
+	DDPCONbits.JTAGEN=0;	// PORTA is used as digital instead of JTAG
+	io_setDigital();		// Analog から Digital I/Oに切り替えます.
+	io_setRemap();          // RA4/RB4 をUARTに割り当てます.
+    mInitAllLEDs();
+//    SerialConfigure(UART1, UART_ENABLE,	UART_RX_TX_ENABLED,	BAUDRATE);
+    led_test();
 
-	Serial1WriteString("\r\n\r\nHello,World.\r\n");
+//	Serial1WriteString("\r\n\r\nHello,World.\r\n");
 }
 
 /********************************************************************
@@ -116,11 +121,6 @@ static	inline	void loop(void)
 
 int main()
 {
-	mInitBootSwitch();
-
-	DDPCONbits.JTAGEN=0;	// PORTA is used as digital instead of JTAG
-	io_setDigital();		// Analog から Digital I/Oに切り替えます.
-	io_setRemap();          // RA4/RB4 をUARTに割り当てます.
 	// 初期化:ユーザー処理
 	setup();
 	// ループ:ユーザー処理
