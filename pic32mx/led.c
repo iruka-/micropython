@@ -93,7 +93,7 @@ static	inline void setup()
 	io_setDigital();		// Analog から Digital I/Oに切り替えます.
 	io_setRemap();          // RA4/RB4 をUARTに割り当てます.
     mInitAllLEDs();
-//    SerialConfigure(UART1, UART_ENABLE,	UART_RX_TX_ENABLED,	BAUDRATE);
+    SerialConfigure(UART1, UART_ENABLE,	UART_RX_TX_ENABLED,	BAUDRATE);
     led_test();
 
 //	Serial1WriteString("\r\n\r\nHello,World.\r\n");
@@ -135,6 +135,7 @@ int main()
  *  Dummy Interrupt Handler
  ********************************************************************
  */
+
 void I2C1Interrupt(void)	{  }
 void I2C2Interrupt(void)	{  }
 void RTCCInterrupt(void)	{  }
