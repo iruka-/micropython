@@ -94,8 +94,8 @@ static	inline void setup()
 	io_setRemap();          // RA4/RB4 をUARTに割り当てます.
     mInitAllLEDs();
     SerialConfigure(UART1, UART_ENABLE,	UART_RX_TX_ENABLED,	BAUDRATE);
-    led_test();
 
+//  led_test();
 //	Serial1WriteString("\r\n\r\nHello,World.\r\n");
 }
 
