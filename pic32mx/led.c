@@ -12,13 +12,16 @@
 #include <const.h>				// Pinguino's constants definitions
 #include <macro.h>				// Pinguino's macros definitions
 
+#include <stdio.h>
+#include <malloc.h>
+
+
 /********************************************************************
  *
  ********************************************************************
  */
 #define	__SERIAL__
 #define __SYSTEM_C
-
 
 #include <system.c>				// PIC32 System Core Functions
 //#include <io.c>					// Pinguino Boards Peripheral Remappage and IOs configurations
@@ -99,6 +102,13 @@ static	inline void setup()
 //	Serial1WriteString("\r\n\r\nHello,World.\r\n");
 }
 
+void  test_func()
+{
+   char *p = malloc(100);
+   printf("%x\n",(int)p);
+}
+
+
 /********************************************************************
  *		Arduino風:	繰り返し処理
  ********************************************************************
@@ -109,7 +119,11 @@ static	inline	void loop(void)
 
 	Serial1WriteChar(ch);
 
-	if(ch == '\r') {
+	if(ch == '!') {
+	    test_func();
+	}
+   
+    if(ch == '\r') {
 		Serial1WriteChar('\n');
 	}
 }

@@ -6,7 +6,9 @@ QSTR_DEFS = qstrdefsport.h
 # include py core make definitions
 include ../py/py.mk
 
+#
 CROSS_COMPILE = p32-
+#
 OBJCOPY	 = p32-objcopy
 
 
@@ -21,12 +23,14 @@ INC += -I$(PINGUINO_INC)/non-free/
 INC += -I$(BUILD)
 
 PROC			= 32MX250F128B
+#PROC			= 32MX270F256B
 DEFINES		    = -D__PIC32MX__ -D__$(PROC)__ -DGENERIC32MX250F128
 
 CFLAGS_PIC32MX  = -march=m4k -EL -msoft-float 
 
 CFLAGS  = $(INC) -Wall -Werror -ansi -std=gnu99 $(CFLAGS_PIC32MX)
-CFLAGS += -mips16 -minterlink-mips16 $(COPT) $(DEFINES)
+CFLAGS += -mips16 -minterlink-mips16
+CFLAGS += -ffunction-sections -fdata-sections  $(COPT) $(DEFINES)
 #DEBUG = 1
 
 #Debugging/Optimization
@@ -36,14 +40,14 @@ else
 CFLAGS += -Os -DNDEBUG
 endif
 
-#LDFLAGS = -nostdlib -T stm32f405.ld -Map=$@.map --cref
 LDFLAGS  = -L/usr/share/pinguino-11/compilers/p32/mips-elf/lib/soft-float/el/
-LDFLAGS += -nostdlib -T 32MX250F128B.ld -T elf32pic32mx.x
-LDFLAGS += -Map=$@.map --cref
+LDFLAGS += -L/usr/share/pinguino-11/compilers/p32/lib/gcc/mips-elf/4.9.2/el/
+LDFLAGS += -nostdlib -T $(PROC).ld -T elf32pic32mx.x
+LDFLAGS += -Map=$@.map --cref --gc-sections 
 
 
 LIBS  = $(PINGUINO_HOME)/p32/obj/non-free/$(PROC).o
-LIBS += -lc
+LIBS += -lc -lgcc
 
 SRC_C = \
 	main.c \
