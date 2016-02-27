@@ -48,6 +48,7 @@ LIBS += -lc
 SRC_C = \
 	main.c \
 	syscalls.c \
+	config.c \
 	led.c \
 	util.c \
 	fifo.c \
