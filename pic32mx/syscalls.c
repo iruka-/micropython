@@ -3,6 +3,7 @@
  ********************************************************************
  */
 
+#include <stdio.h>
 #include "serial1.h"
 
 #define	EXTERN	extern char
@@ -66,16 +67,19 @@ int fstat (int file,char * ptr,int    len)
 EXTERN	_heap	;/* end address for the .bss section.     */
 EXTERN	_splim	;/* end address for the .bss section.     */
 
+//char buf[8192];
+
 static char *sbrk_ptr = (char *) &_heap;
+//static char *sbrk_ptr = buf;
 
 //	malloc()から呼び出される可能性がある.
 char *sbrk(int size)
 {
     char *ret;
-    if(sbrk_ptr + size > &_splim ) {
+
+    if(0){//sbrk_ptr + size > &_splim ) {
 		return (char *) (-1);	// メモリーがない.
-    }
-    else {
+    }else {
         ret = sbrk_ptr;
         sbrk_ptr += size;		// sbrk_ptrを進める.
     }

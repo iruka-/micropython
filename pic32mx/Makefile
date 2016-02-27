@@ -43,6 +43,7 @@ endif
 LDFLAGS  = -L/usr/share/pinguino-11/compilers/p32/mips-elf/lib/soft-float/el/
 LDFLAGS += -L/usr/share/pinguino-11/compilers/p32/lib/gcc/mips-elf/4.9.2/el/
 LDFLAGS += -nostdlib -T $(PROC).ld -T elf32pic32mx.x
+LDFLAGS += --defsym _min_heap_size=16384
 LDFLAGS += -Map=$@.map --cref --gc-sections 
 
 

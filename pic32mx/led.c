@@ -108,6 +108,22 @@ void  test_func()
    printf("%x\n",(int)p);
 }
 
+#define	EXTERN	extern char
+EXTERN	_heap	;/* end address for the .bss section.     */
+EXTERN	_splim	;/* end address for the .bss section.     */
+   
+char *sbrk(int size);
+
+
+void  test_func1()
+{
+   char buf[256];
+   sprintf(buf,"%x\n",(int) &_heap);
+   Serial1WriteString(buf);
+   sprintf(buf,"%x\n",(int) &_splim );
+   Serial1WriteString(buf);
+}
+
 
 /********************************************************************
  *		Arduino風:	繰り返し処理
@@ -120,6 +136,9 @@ static	inline	void loop(void)
 	Serial1WriteChar(ch);
 
 	if(ch == '!') {
+	    test_func1();
+	}
+	if(ch == '@') {
 	    test_func();
 	}
    
