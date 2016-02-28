@@ -93,6 +93,8 @@
 
 * type '#' and run Python main.
 
+main.c
+
     int main_python(int argc, char **argv) {
         mp_init();
         do_str("print('hello world!', list(x+1 for x in range(10)), end='eol\\n')", MP_PARSE_SINGLE_INPUT);
