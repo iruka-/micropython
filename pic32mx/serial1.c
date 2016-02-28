@@ -260,7 +260,18 @@ void UARTwrite(uchar *buf,int len)
  *
  ********************************************************************
  */
-void Serial1WriteString(char *buf)
+void Serial1Write(const char *buf,int len)
+{
+	while(len>0) {
+		Serial1WriteChar(*buf++);
+	    len--;
+	}
+}
+/********************************************************************
+ *
+ ********************************************************************
+ */
+void Serial1WriteString(const char *buf)
 {
 	while(*buf) {
 		Serial1WriteChar(*buf++);

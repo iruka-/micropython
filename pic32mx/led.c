@@ -102,6 +102,7 @@ static	inline void setup()
 //	Serial1WriteString("\r\n\r\nHello,World.\r\n");
 }
 
+#if 1
 void  test_func()
 {
    char *p = malloc(100);
@@ -123,7 +124,8 @@ void  test_func1()
    sprintf(buf,"%x\n",(int) &_splim );
    Serial1WriteString(buf);
 }
-
+#endif
+int main_python(int argc, char **argv);
 
 /********************************************************************
  *		Arduino風:	繰り返し処理
@@ -134,12 +136,16 @@ static	inline	void loop(void)
 	int ch = Serial1GetKey();
 
 	Serial1WriteChar(ch);
-
+#if 1
 	if(ch == '!') {
 	    test_func1();
 	}
 	if(ch == '@') {
 	    test_func();
+	}
+#endif
+	if(ch == '#') {
+	    main_python(0,0);
 	}
    
     if(ch == '\r') {

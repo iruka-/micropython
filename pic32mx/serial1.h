@@ -108,7 +108,8 @@ void	SerialFlush(u8 port);
 void	SerialPinConfigure(u8 port);
 void	SerialIntConfigure(u8 port, u8 priority, u8 subpriority);
 void	SerialConfigure(u8 port, u32 config, u32 enable, u32 baudrate);
-void    Serial1WriteString(char *buf);
+void    Serial1WriteString(const char *buf);
+void    Serial1Write(const char *buf,int len);
 
 void MIPS32 Serial1WriteChar(char c);
 int		Serial1Available();

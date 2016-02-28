@@ -20,6 +20,7 @@ INC += -I.
 INC += -I..
 INC += -I$(PINGUINO_INC)/pinguino/core/
 INC += -I$(PINGUINO_INC)/non-free/
+INC +=  -I../lib/mp-readline
 INC += -I$(BUILD)
 
 PROC			= 32MX250F128B
@@ -29,7 +30,7 @@ DEFINES		    = -D__PIC32MX__ -D__$(PROC)__ -DGENERIC32MX250F128
 CFLAGS_PIC32MX  = -march=m4k -EL -msoft-float 
 
 CFLAGS  = $(INC) -Wall -Werror -ansi -std=gnu99 $(CFLAGS_PIC32MX)
-CFLAGS += -mips16 -minterlink-mips16
+CFLAGS += -mips16 -minterlink-mips16 -G4
 CFLAGS += -ffunction-sections -fdata-sections  $(COPT) $(DEFINES)
 #DEBUG = 1
 
@@ -59,12 +60,13 @@ SRC_C = \
 	fifo.c \
 	serial1.c \
 	interrupt.c \
+	printf.c \
 
+#    lib/utils/pyexec.c \
 
-#	printf.c \
-	string0.c \
-	malloc0.c \
-	gccollect.c \
+#	string0.c \
+#	malloc0.c \
+#	gccollect.c \
 
 
 SRC_S = \

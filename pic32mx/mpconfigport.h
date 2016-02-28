@@ -58,12 +58,20 @@ typedef const void *machine_const_ptr_t; // must be of pointer size
 typedef long mp_off_t;
 
 // dummy print
-#define MP_PLAT_PRINT_STRN(str, len) (void)0
+//#define MP_PLAT_PRINT_STRN(str, len) (void)0
+
+void    Serial1Write(const char *str,int len);
+
+#define MP_PLAT_PRINT_STRN(str, len) Serial1Write(str,len)
 
 // extra built in names to add to the global namespace
 extern const struct _mp_obj_fun_builtin_t mp_builtin_open_obj;
 #define MICROPY_PORT_BUILTINS \
     { MP_OBJ_NEW_QSTR(MP_QSTR_open), (mp_obj_t)&mp_builtin_open_obj },
+
+
+#define MICROPY_HW_BOARD_NAME "orangepico"
+#define MICROPY_HW_MCU_NAME "pic32mx"
 
 // We need to provide a declaration/definition of alloca()
 #include <alloca.h>
