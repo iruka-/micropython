@@ -49,8 +49,11 @@
 
 # Build Instructions for PIC32MX
 
-[INSTALL Pinguino-11 p32-gcc Toolchain](http://www.pinguino.cc/download.php)
+* [INSTALL Pinguino-11 p32-gcc Toolchain](http://www.pinguino.cc/download.php)
 
+* Linux or Windows
+
+-
 
     $ make
        .
