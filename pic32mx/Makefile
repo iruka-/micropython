@@ -12,8 +12,33 @@ CROSS_COMPILE = p32-
 OBJCOPY	 = p32-objcopy
 
 
-#PINGUINO_HOME = C:\pinguino-11
+#============================
+# Running under MS-DOS ?
+ ifdef ComSpec
+MSDOS=1
+ endif
+
+ ifdef COMSPEC
+MSDOS=1
+ endif
+#
+#============================
+
+ ifdef MSDOS
+
+PINGUINO_HOME  = C:/pinguino-11
+LIBC_DIR   = $(PINGUINO_HOME)/compilers/p32/mips-elf/lib/soft-float/el/
+LIBGCC_DIR = $(PINGUINO_HOME)/compilers/p32/lib/gcc/mips-elf/4.9.2/el/
+
+ else
+
 PINGUINO_HOME  = /usr/share/pinguino-11
+LIBC_DIR       = /usr/mips-elf/lib/soft-float/el/
+LIBGCC_DIR     = /usr/lib/gcc/mips-elf/4.9.2/el/
+
+ endif
+
+
 PINGUINO_INC   = $(PINGUINO_HOME)/p32/include
 
 INC += -I.
@@ -22,6 +47,7 @@ INC += -I$(PINGUINO_INC)/pinguino/core/
 INC += -I$(PINGUINO_INC)/non-free/
 INC +=  -I../lib/mp-readline
 INC += -I$(BUILD)
+
 
 PROC			= 32MX250F128B
 #PROC			= 32MX270F256B
@@ -41,12 +67,15 @@ else
 CFLAGS += -Os -DNDEBUG
 endif
 
-LDFLAGS  = -L/usr/share/pinguino-11/compilers/p32/mips-elf/lib/soft-float/el/
-LDFLAGS += -L/usr/share/pinguino-11/compilers/p32/lib/gcc/mips-elf/4.9.2/el/
+
+#/compilers/p32/mips-elf/lib/soft-float/el/
+#/compilers/p32/lib/gcc/mips-elf/4.9.2/el/
+
+LDFLAGS  = -L$(LIBC_DIR) -L$(LIBGCC_DIR)
+
 LDFLAGS += -nostdlib -T $(PROC).ld -T elf32pic32mx.x
 LDFLAGS += --defsym _min_heap_size=16384
 LDFLAGS += -Map=$@.map --cref --gc-sections 
-
 
 LIBS  = $(PINGUINO_HOME)/p32/obj/non-free/$(PROC).o
 LIBS += -lc -lgcc
