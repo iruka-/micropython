@@ -49,9 +49,9 @@
 
 # Build Instructions for PIC32MX
 
-* [INSTALL Pinguino-11 p32-gcc Toolchain](http://www.pinguino.cc/download.php)
+* USE Linux or Windows ( Python required ) .
 
-* Linux or Windows
+* [INSTALL Pinguino-11 p32-gcc Toolchain](http://www.pinguino.cc/download.php)
 
 -
 
