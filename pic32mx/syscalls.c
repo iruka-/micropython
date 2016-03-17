@@ -4,13 +4,79 @@
  */
 
 #include <stdio.h>
+#include "util.h"
+
 #include "serial1.h"
+#include "ps2keyb.h"
+#include "graph.h"
 
 #define	EXTERN	extern char
 
+static int user_stdout_mode_f=0;
+
+/********************************************************************
+ *
+ ********************************************************************
+ */
 void user_putc(char c)
 {
-    Serial1WriteChar(c);
+	if(	user_stdout_mode_f ){	// UARTとNTSCの両方に出力する.
+	    Serial1WriteChar(c);
+	}
+	gr_putch(c);				// NTSCのみ.
+}
+/********************************************************************
+ *
+ ********************************************************************
+ */
+void user_puts(const char *s)
+{
+	while(*s) {
+	    user_putc(*s++);
+	}
+}
+/********************************************************************
+ *
+ ********************************************************************
+ */
+void user_write_console(const char *s,int len)
+{
+	int i;
+	for(i=0;i<len;i++) {
+	    user_putc(*s++);
+	}
+}
+/********************************************************************
+ *
+ ********************************************************************
+ */
+int user_stdout_mode(int f)
+{
+	int ret = user_stdout_mode_f;
+	user_stdout_mode_f = f;
+	return ret;
+}
+
+/********************************************************************
+ *
+ ********************************************************************
+ */
+int user_getc(void)
+{
+	int c;
+	// from UART1
+	if(	Serial1Available()) {
+		c = Serial1GetKey();
+//		printf("[%02x]",c);
+		return c;
+	}
+	
+	// from PS/2 Key
+	c = kbd_getchar();		// : ASCII コードを取得.
+	if(c != 0) {
+		return c;
+	}
+	return -1;
 }
 
 //	open()したファイルハンドルは、コンソール(tty)であるかどうか知る.
@@ -42,7 +108,7 @@ int lseek (int file,int ptr,int dir)
 int write (int file,char * ptr,int    len)
 {
 	//仮実装.
-	if(file<3) {
+	if(file<=3) {
 		while(len) {
 			user_putc(*ptr++);
 			len--;
@@ -51,10 +117,27 @@ int write (int file,char * ptr,int    len)
 	return len;	
 }
 
-//	read()は何もしない.
+//	read()はUART1からlenバイト(実際は1文字だけ)読み取る.
 int read (int file,char * ptr,int    len)
 {
-	return 0;
+#if	0
+	//仮実装.
+	if(file<3) {
+//		printf("read(%d,%x,%d):\n",file,(int)ptr,len);
+		while(1) {
+			int c = user_getc();
+			if( c!=(-1)) {
+				*ptr++ = c;
+				//printf("<%02x>",c);
+				return 1;	// 1文字だけ入力されたら帰る.
+			}
+		}
+	}
+//	printf("read(%d,%x,%d)=%d\n",file,(int)ptr,len,len0);
+	return len;	
+#else
+	return len;
+#endif
 }
 
 //	fstatは何もしない.

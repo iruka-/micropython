@@ -99,6 +99,35 @@ void wait_nloop(int n)
 }
 
 
+/********************************************************************
+ *	( us * 1/8 ) uS 待つ. clock=72MHzと仮定.
+ ********************************************************************
+ */
+//clock=48MHzと仮定.	最適化オプションやコンパイラが変わったら再計測.
+void _MIPS32 wait_125ns(int ns)
+{
+	int i;
+	for(i=0; i<ns; i++) {
+		asm("nop");
+	}
+}
+/********************************************************************
+ *	( us ) * 1uS 待つ.
+ ********************************************************************
+ */
+void _MIPS32 wait_us(int us)
+{
+	wait_125ns(us*8);
+}
+/********************************************************************
+ *	
+ ********************************************************************
+ */
+void _MIPS32 wait_0us(void)
+{
+}
+
+
 #if	0
 /********************************************************************
  *	code領域節約 INT系関数.
@@ -125,6 +154,24 @@ void __attribute__((nomips16,section(".bootrom")))  INTRestoreInterrupts(unsigne
 //}
 #endif
 
+
+/********************************************************************
+ *  Dummy Interrupt Handler
+ ********************************************************************
+ */
+
+void I2C1Interrupt(void)	{  }
+void I2C2Interrupt(void)	{  }
+void RTCCInterrupt(void)	{  }
+void SPI1Interrupt(void)	{  }
+void SPI2Interrupt(void)	{  }
+void Serial2Interrupt(void)	{  }
+//void Timer1Interrupt(void)	{  }
+//void Timer2Interrupt(void)	{  }
+//void Timer3Interrupt(void)	{  }
+void Timer4Interrupt(void)	{  }
+void Timer5Interrupt(void)	{  }
+void USBInterrupt(void)		{  }
 
 /********************************************************************
  *	
